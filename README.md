@@ -204,6 +204,4 @@ Contributions are welcome! If you find issues or have suggestions for improvemen
 - Maintain the existing project structure unless a change is necessary.
 
 ---
-
-*Happy Coding!*
 ```
