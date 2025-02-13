@@ -1,0 +1,204 @@
+<!--
+  @description       : 
+  @author            : Piyush Dhaked
+  @group             : 
+  @last modified on  : 02-13-2025
+  @last modified by  : Piyush Dhaked
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   02-11-2025   Piyush Dhaked   Initial Version
+-->
+<template>
+    <lightning-card title="IRCTC Train Services" icon-name="standard:train">
+        <div class="slds-p-around_medium">
+            <lightning-combobox 
+                label="Select Feature" 
+                value={selectedFeature} 
+                options={featureOptions} 
+                onchange={handleFeatureChange}>
+            </lightning-combobox>
+            
+            <lightning-input 
+                label="Train Number" 
+                value={trainNo} 
+                onchange={handleTrainNoChange} 
+                placeholder="Enter Train Number">
+            </lightning-input>
+            
+            <template if:true={isLiveStatus}>
+                <lightning-combobox 
+                    label="Start Day" 
+                    value={startDay} 
+                    placeholder="Select Start Day" 
+                    options={startDayOptions} 
+                    onchange={handleStartDayChange}>
+                </lightning-combobox>
+            </template>
+            
+            <div class="slds-m-top_medium slds-text-align_left button-container">
+                <lightning-button-icon 
+                    icon-name="utility:refresh" 
+                    alternative-text="Refresh" 
+                    title="Refresh" 
+                    onclick={refreshData} 
+                    class="refresh-icon-button">
+                </lightning-button-icon>
+                <lightning-button 
+                    label="Get Data" 
+                    onclick={fetchData} 
+                    class="get-data-button">
+                </lightning-button>
+            </div>
+            
+            <template if:true={isLoading}>
+                <div class="slds-p-around_medium">
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </div>
+            </template>
+            
+            <template if:true={error}>
+                <div class="slds-text-color_error slds-p-around_medium">
+                    {error}
+                </div>
+            </template>
+            
+            <template if:true={data}>
+                <template if:true={isLiveStatus}>
+                    <div class="slds-p-around_medium train-details">
+                        <h2>Train Information</h2>
+                        <p><strong>Train Number:</strong> {data.train_number}</p>
+                        <p><strong>Train Name:</strong> {data.train_name}</p>
+                        <p><strong>Source:</strong> {data.source_stn_name} ({data.source})</p>
+                        <p><strong>Destination:</strong> {data.dest_stn_name} ({data.destination})</p>
+                        <p><strong>Start Date:</strong> {data.train_start_date}</p>
+                        <p><strong>Notification Date:</strong> {data.notification_date}</p>
+                        <p><strong>Run Days:</strong> {data.run_days}</p>
+                        <p><strong>Journey Time:</strong> {data.journey_time} mins</p>
+                        <p><strong>Delay:</strong> {data.delay} mins</p>
+                    </div>
+                    
+                    <div class="slds-p-around_medium current-status">
+                        <h2>Current Status</h2>
+                        <p><strong>Status:</strong> {data.title}</p>
+                        <p><strong>Current Station:</strong> {data.current_station_name} ({data.current_station_code})</p>
+                        <p><strong>ETA:</strong> {data.eta}</p>
+                        <p><strong>ETD:</strong> {data.etd}</p>
+                        <p><strong>Update Time:</strong> {data.update_time}</p>
+                        <p><strong>Status As Of:</strong> {data.status_as_of}</p>
+                        <p><strong>Message:</strong> {data.new_message}</p>
+                    </div>
+                    
+                    <div class="slds-p-around_medium timeline">
+                        <h2>Previous Stations</h2>
+                        <template if:true={data.previous_stations}>
+                            <ul class="timeline-list">
+                                <template for:each={data.previous_stations} for:item="station">
+                                    <li key={station.si_no} class="timeline-item">
+                                        <div class="station-info">
+                                            <p><strong>{station.station_name} ({station.station_code})</strong></p>
+                                            <p>
+                                                STD: {station.std} | STA: {station.sta} | ETA: {station.eta} | Delay: {station.arrival_delay} mins
+                                            </p>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                    </div>
+                    
+                    <div class="slds-p-around_medium ttb-card">
+                        <h2>{data.ttb_card.book_now_title}</h2>
+                        <div class="ttb-details">
+                            <div class="ttb-rating">
+                                <p><strong>Rating:</strong> {data.ttb_card.rating}</p>
+                                <p><strong>Reviews:</strong> {data.ttb_card.reviews}</p>
+                                <p><strong>Downloads:</strong> {data.ttb_card.downloads}</p>
+                            </div>
+                            <div class="ttb-features">
+                                <div class="feature">
+                                    <img src={data.ttb_card.text_1_icon} alt={data.ttb_card.text_1} title={data.ttb_card.text_1}/>
+                                    <p>{data.ttb_card.text_1}</p>
+                                </div>
+                                <div class="feature">
+                                    <img src={data.ttb_card.text_2_icon} alt={data.ttb_card.text_2} title={data.ttb_card.text_2}/>
+                                    <p>{data.ttb_card.text_2}</p>
+                                </div>
+                                <div class="feature">
+                                    <img src={data.ttb_card.text_3_icon} alt={data.ttb_card.text_3} title={data.ttb_card.text_3}/>
+                                    <p>{data.ttb_card.text_3}</p>
+                                </div>
+                                <div class="feature">
+                                    <img src={data.ttb_card.text_4_icon} alt={data.ttb_card.text_4} title={data.ttb_card.text_4}/>
+                                    <p>{data.ttb_card.text_4}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                
+                <template if:true={isSchedule}>
+                    <div class="slds-p-around_medium train-schedule">
+                        <h2>Train Schedule</h2>
+                        <p><strong>Train Type:</strong> {data.trainType}</p>
+                        <p><strong>Train Number:</strong> {data.trainNumber}</p>
+                        <p><strong>Train Name:</strong> {data.trainName}</p>
+                        <p><strong>Run Days:</strong> {runDays}</p>
+                        <template if:true={data.class}>
+                            <p><strong>Classes:</strong> 
+                                <template for:each={data.class} for:item="classItem">
+                                    <span key={classItem.value} class="class-item">{classItem.name}</span>
+                                </template>
+                            </p>
+                        </template>
+                    </div>
+                    
+                    <div class="slds-p-around_medium schedule-route">
+                        <h2>Route</h2>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Station Name">Station Name</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Station Code">Code</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Scheduled Time">Scheduled Time</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Halt (mins)">Halt</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Platform">Platform</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={data.route} for:item="route">
+                                    <tr key={route.station_code}>
+                                        <td data-label="Station Name">
+                                            <div class="slds-truncate" title={route.station_name}>{route.station_name}</div>
+                                        </td>
+                                        <td data-label="Station Code">
+                                            <div class="slds-truncate" title={route.station_code}>{route.station_code}</div>
+                                        </td>
+                                        <td data-label="Scheduled Time">
+                                            <div class="slds-truncate" title={route.std_min}>{route.formattedTime}</div>
+                                        </td>
+                                        <td data-label="Halt">
+                                            <div class="slds-truncate" title={route.halt}>{route.halt}</div>
+                                        </td>
+                                        <td data-label="Platform">
+                                            <div class="slds-truncate" title={route.platform_number}>{route.platform_number}</div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

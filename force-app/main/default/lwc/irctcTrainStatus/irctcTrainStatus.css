@@ -1,0 +1,111 @@
+.slds-p-around_medium {
+    margin-bottom: 1rem;
+}
+
+.button-container {
+    margin-bottom: 1rem;
+}
+
+.get-data-button {
+    background-color: #90ee90 !important; /* Light green */
+    border: 1px solid #90ee90 !important;
+    color: black !important;
+    margin-right: 0.5rem;
+}
+
+.refresh-icon-button {
+    background-color: #FFA500 !important; /* Orange */
+    border-radius: 50% !important;
+    padding: 0.5rem !important;
+    margin-right: 0.5rem;
+}
+
+.train-details, 
+.current-status, 
+.timeline, 
+.ttb-card, 
+.train-schedule, 
+.schedule-route {
+    background-color: #f9f9f9;
+    border: 1px solid #d8dde6;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.train-details h2,
+.current-status h2,
+.timeline h2,
+.ttb-card h2,
+.train-schedule h2,
+.schedule-route h2 {
+    color: #0a5e9c;
+    border-bottom: 2px solid #0a5e9c;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.timeline-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.timeline-item {
+    border-left: 3px solid #0a5e9c;
+    margin-left: 1rem;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background-color: #0a5e9c;
+    border-radius: 50%;
+    position: absolute;
+    left: -7px;
+    top: 5px;
+}
+
+.ttb-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.ttb-rating {
+    flex: 1;
+    min-width: 200px;
+}
+
+.ttb-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.feature {
+    text-align: center;
+}
+
+.feature img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.slds-table {
+    width: 100%;
+}
+
+.class-item {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.4rem;
+    background-color: #e8f5e9;
+    border-radius: 0.2rem;
+    font-size: 0.9rem;
+}
