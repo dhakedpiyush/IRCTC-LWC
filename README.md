@@ -94,7 +94,7 @@ This module demonstrates how to integrate external train information APIs into S
 - **Purpose:**  
   Provides two `@AuraEnabled` methods to retrieve train data from an external API:
   - **Live Train Status:** Retrieves current train status, including delays and journey details.
-  - **Train Schedule:** Retrieves the schedule and route information for a given train number.
+  - **Train Schedule:** Retrieves the schedule and route information for a given train number..
 
 - **Highlights:**
   - Validates input parameters.
