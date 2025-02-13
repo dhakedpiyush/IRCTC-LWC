@@ -1,6 +1,6 @@
 # LWC Practice Project
 
-This Salesforce DX project is designed for practicing and experimenting with Lightning Web Components (LWC), Apex classes, Visualforce pages, Aura components, and API integrations. The project demonstrates best practices in code documentation and structure.
+This Salesforce DX project is designed for practicing and experimenting with Lightning Web Components (LWC), Apex classes, Visualforce pages, Aura components, and API integrations. It demonstrates best practices in code documentation, project structure, and external API integrations.
 
 ---
 
@@ -10,10 +10,9 @@ This Salesforce DX project is designed for practicing and experimenting with Lig
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
 - [Setup and Deployment](#setup-and-deployment)
-- [Code Documentation Guidelines](#code-documentation-guidelines)
-  - [Apex Classes](#apex-classes)
-  - [Lightning Web Components](#lightning-web-components)
-  - [Visualforce Pages](#visualforce-pages)
+- [IRCTC Train Services Module Documentation](#irctc-train-services-module-documentation)
+  - [Apex Class: IRCTCTrainService](#apex-class-irctctrainservice)
+  - [Lightning Web Component: IrctcTrainStatus](#lightning-web-component-irctctrainstatus)
 - [Useful Resources](#useful-resources)
 - [Contributing](#contributing)
 
@@ -23,7 +22,7 @@ This Salesforce DX project is designed for practicing and experimenting with Lig
 
 This repository is set up to:
 - Practice building and deploying Lightning Web Components.
-- Write well-documented Apex classes that can be used for API integrations and backend logic.
+- Write well-documented Apex classes for API integrations and backend logic.
 - Develop Visualforce pages and Aura components for legacy support and custom UIs.
 - Follow Salesforce DX best practices for source control and deployment.
 
@@ -31,26 +30,18 @@ This repository is set up to:
 
 ## Project Structure
 
-Below is a sample structure of the repository. (Update the folder names as needed.)
+A sample structure of the repository is shown below:
 
 ```
 LWCPractice/
-├── sfdx-project.json               # Salesforce DX configuration file
+├── sfdx-project.json
 └── force-app/
     └── main/
         └── default/
             ├── classes/            # Apex classes and test classes
-            │   ├── ExampleController.cls
-            │   └── ExampleController.cls-meta.xml
             ├── lwc/                # Lightning Web Components
-            │   └── myComponent/
-            │       ├── myComponent.js
-            │       ├── myComponent.html
-            │       ├── myComponent.js-meta.xml
-            │       └── myComponent.css
+            │   └── irctcTrainStatus/
             ├── pages/              # Visualforce pages
-            │   ├── ExamplePage.page
-            │   └── ExamplePage.page-meta.xml
             └── aura/               # Aura components (if applicable)
 ```
 
@@ -58,7 +49,7 @@ LWCPractice/
 
 ## Prerequisites
 
-- **Salesforce CLI:** Install from [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
+- **Salesforce CLI:** [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
 - **Visual Studio Code:** With [Salesforce Extensions Pack](https://developer.salesforce.com/tools/vscode/)
 - **Salesforce DX Enabled Org:** For source deployment and testing
 - **Node.js:** For any LWC tooling and package management
@@ -94,108 +85,58 @@ LWCPractice/
 
 ---
 
-## Code Documentation Guidelines
+## IRCTC Train Services Module Documentation
 
-This project uses inline code documentation to ensure that the codebase is clear, maintainable, and useful for other developers.
+This module demonstrates how to integrate external train information APIs into Salesforce using Apex callouts and Lightning Web Components (LWC). The module provides two core functionalities:
 
-### Apex Classes
+### Apex Class: IRCTCTrainService
 
-Apex classes should include Javadoc-style comments for every class and method. For example:
+- **Purpose:**  
+  Provides two `@AuraEnabled` methods to retrieve train data from an external API:
+  - **Live Train Status:** Retrieves current train status, including delays and journey details.
+  - **Train Schedule:** Retrieves the schedule and route information for a given train number.
 
-```apex
-/**
- * ExampleController handles account retrieval and basic business logic.
- *
- * <p>This class demonstrates how to query Salesforce records using SOQL.
- * It is designed for educational purposes and can be extended for more complex operations.</p>
- *
- * @author 
- * @since 2025-02-13
- */
-public with sharing class ExampleController {
+- **Highlights:**
+  - Validates input parameters.
+  - Constructs API endpoint URLs with proper URL encoding.
+  - Sets required HTTP headers and sends HTTP GET requests.
+  - Returns API responses or throws exceptions on errors.
 
-    /**
-     * Retrieves a list of Account records.
-     *
-     * @return List<Account> A list of account records limited to 10 entries.
-     */
-    public static List<Account> getAccounts() {
-        return [SELECT Id, Name FROM Account LIMIT 10];
-    }
-}
-```
+### Lightning Web Component: IrctcTrainStatus
 
-### Lightning Web Components
+- **Purpose:**  
+  Offers a user interface for interacting with the IRCTC Train Services. Users can:
+  - Select between "Live Train Status" and "Train Schedule" features.
+  - Enter a train number and optionally a start day for live status.
+  - View detailed train information, including status, schedule, and route details.
 
-For LWCs, include documentation in the JavaScript, HTML, and CSS files.
+- **Highlights:**
+  - **Dynamic UI:**  
+    Uses comboboxes and input fields to capture user selections.
+  - **Conditional Rendering:**  
+    Displays loading spinners, error messages, and data based on API responses.
+  - **Data Processing:**  
+    Parses and formats API response data for user-friendly presentation (e.g., converting minutes into HH:MM format).
 
-**Example:** `myComponent.js`
-
-```js
-/**
- * @module myComponent
- * @description A Lightning Web Component that displays and updates a greeting message.
- */
-import { LightningElement } from 'lwc';
-
-export default class MyComponent extends LightningElement {
-    // The greeting message to be displayed
-    greeting = 'Hello, Salesforce!';
-
-    /**
-     * Handles input change events to update the greeting message.
-     *
-     * @param {Event} event - The input change event.
-     */
-    handleChange(event) {
-        this.greeting = event.target.value;
-    }
-}
-```
-
-**Example:** `myComponent.html`
-
-```html
-<template>
-    <!-- Display the greeting message -->
-    <h1>{greeting}</h1>
-    <!-- Input field to update the greeting -->
-    <lightning-input label="Update Greeting" onchange={handleChange}></lightning-input>
-</template>
-```
-
-### Visualforce Pages
-
-Include comments within Visualforce pages to explain page functionality and controller interactions.
-
-**Example:** `ExamplePage.page`
-
-```html
-<apex:page controller="ExampleController">
-    <!-- 
-        ExamplePage demonstrates how to use Visualforce with an Apex controller.
-        It displays a list of Account names retrieved from the controller.
-    -->
-    <apex:repeat value="{!accounts}" var="acc">
-        <p>{!acc.Name}</p>
-    </apex:repeat>
-</apex:page>
-```
+---
 
 ## Useful Resources
 
 - [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
+- [Lightning Web Components Developer Guide](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)
+- [Apex Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/)
 - [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
-- [Salesforce API Documentation](https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/)
+- [RapidAPI Documentation](https://rapidapi.com/)
 
 ---
 
 ## Contributing
 
-Contributions are welcome! If you find issues or have suggestions for improvements, please open an issue or submit a pull request. When contributing, please adhere to the following guidelines:
+Contributions are welcome! When submitting enhancements or bug fixes, please ensure:
+- The code follows the existing project style and documentation standards.
+- Inline comments and documentation are maintained or improved.
+- Adequate testing is performed to ensure the functionality of API integrations.
 
-- Follow the [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- Ensure all code is well-documented using inline comments and proper Javadoc-style comments for Apex.
-- Maintain the existing project structure unless a change is necessary.
+---
+
+```
