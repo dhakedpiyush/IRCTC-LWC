@@ -66,6 +66,6 @@ public with sharing class IRCTCTrainService {
         } catch(Exception ex) {
             throw new AuraHandledException('Exception: ' + ex.getMessage());
         }
-        //Changes/..
+        
     }
 }
