@@ -1,5 +1,4 @@
 
----
 
 ```markdown
 # LWC Practice Project
