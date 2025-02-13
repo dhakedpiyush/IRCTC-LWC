@@ -1,5 +1,3 @@
-
-
 ```markdown
 # LWC Practice Project
 
@@ -191,6 +189,7 @@ Include comments within Visualforce pages to explain page functionality and cont
 
 - [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
 - [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
+- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
 - [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
 - [Salesforce API Documentation](https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/)
 
@@ -208,7 +207,3 @@ Contributions are welcome! If you find issues or have suggestions for improvemen
 
 *Happy Coding!*
 ```
-
----
-
-Feel free to adjust the file paths, controller names, and component details to match the actual content of your repository. This updated README provides a clear structure, setup instructions, and examples of code documentation across different Salesforce technologies.
