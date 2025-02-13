@@ -1,4 +1,3 @@
-```markdown
 # LWC Practice Project
 
 This Salesforce DX project is designed for practicing and experimenting with Lightning Web Components (LWC), Apex classes, Visualforce pages, Aura components, and API integrations. The project demonstrates best practices in code documentation and structure.
@@ -183,8 +182,6 @@ Include comments within Visualforce pages to explain page functionality and cont
 </apex:page>
 ```
 
----
-
 ## Useful Resources
 
 - [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
@@ -202,6 +199,3 @@ Contributions are welcome! If you find issues or have suggestions for improvemen
 - Follow the [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
 - Ensure all code is well-documented using inline comments and proper Javadoc-style comments for Apex.
 - Maintain the existing project structure unless a change is necessary.
-
----
-```
