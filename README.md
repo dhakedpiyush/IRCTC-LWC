@@ -138,5 +138,3 @@ Contributions are welcome! When submitting enhancements or bug fixes, please ens
 - Adequate testing is performed to ensure the functionality of API integrations.
 
 ---
-
-```
