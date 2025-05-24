@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Piyush Dhaked
  * @group             : 
- * @last modified on  : 02-13-2025
+ * @last modified on  : 05-06-2025
  * @last modified by  : Piyush Dhaked
  * Modifications Log
  * Ver   Date         Author          Modification
@@ -11,9 +11,11 @@
 public with sharing class IRCTCTrainService {
     @AuraEnabled(cacheable=false)
     public static String getLiveTrainStatus(String trainNo, String startDay) {
+        
         if(String.isBlank(trainNo)){
             throw new AuraHandledException('Train number is required.');
         }
+
         Http http = new Http();
         HttpRequest req = new HttpRequest();
         
